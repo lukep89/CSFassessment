@@ -17,6 +17,6 @@ public class AppConfig {
 	@Bean
 	public MongoTemplate createTemplate() {
 		MongoClient client = MongoClients.create(mongoUrl);
-		return new MongoTemplate(client, "movieReview");
+		return new MongoTemplate(client, "test");
 	}
 }
