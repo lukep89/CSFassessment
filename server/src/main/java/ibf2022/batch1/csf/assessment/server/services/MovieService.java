@@ -56,7 +56,6 @@ public class MovieService {
 
 		try {
 			resp = template.exchange(req, String.class);
-
 		} catch (RestClientException e) {
 			e.printStackTrace();
 			return Collections.emptyList();
@@ -67,9 +66,11 @@ public class MovieService {
 
 		JsonReader reader = Json.createReader(new StringReader(payload));
 		JsonObject respJsonObj = reader.readObject();
-		System.out.println(">>>> respJsonObj: " + respJsonObj);
+		// System.out.println(">>>> respJsonObj: " + respJsonObj);
 
 		JsonArray jsonArr = respJsonObj.getJsonArray("results");
+		System.out.println(">>>> jsonArr: " + jsonArr);
+
 
 		// List<Review> reviewsList = jsonArr.stream()
 		// .map(n -> n.asJsonObject())

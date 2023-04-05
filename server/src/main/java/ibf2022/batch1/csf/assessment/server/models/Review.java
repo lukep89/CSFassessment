@@ -103,22 +103,24 @@ public class Review {
 
 		Review review = new Review();
 		review.setTitle(obj.getString("display_title"));
+		System.out.println(">>>>>> object.get: " + obj.getString("display_title"));
 		review.setRating(obj.getString("mpaa_rating"));
 		review.setByline(obj.getString("byline"));
 		review.setHeadline(obj.getString("headline"));
 		review.setSummary(obj.getString("summary_short"));
-		review.setReviewURL(obj.getString("link.url"));
-		// review.setImage(obj.getString("multimedia.src")); // if null, client handle
-		// to placeholder.jpg
-		review.setImage(haveImage("multimedia.src", obj));
+		review.setReviewURL(obj.get("link").asJsonObject().getString("url"));
+		review.setImage(haveImage("multimedia", obj));
 
 		System.out.println(">>>> IN toReview()");
 		return review;
 	}
 
 	private static String haveImage(String fn, JsonObject obj) {
-		if (obj.getString(fn) != null && obj.containsKey("multimedia")) {
-			return obj.getString(fn);
+
+		// System.out.println(">>>>>" + !obj.isNull("multimedia"));
+		if (!obj.isNull("multimedia")) {
+
+			return obj.get("multimedia").asJsonObject().getString("src");
 		}
 		return "noImage";
 	}
