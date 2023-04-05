@@ -1,0 +1,45 @@
+<!-- <p>post-comment works!</p> -->
+
+<div>
+  <h3>Post comment for {{ movieName }}</h3>
+
+  <form [formGroup]="form" (ngSubmit)="post()">
+    <table>
+      <tr>
+        <td>Name:</td>
+        <td>
+          <input type="text" formControlName="name" />
+        </td>
+      </tr>
+      <tr>
+        <td>Rating:</td>
+        <td>
+          <select formControlName="rating">
+            <!-- <option *ngFor="let i = index" [value]="i">{{ i }}</option> -->
+            <option [value]="1">1</option>
+            <option [value]="2">2</option>
+            <option [value]="3">3</option>
+            <option [value]="4">4</option>
+            <option [value]="5">5</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <textarea formControlName="comment" cols="30" rows="10"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button type="button" [routerLink]="['/list', movieName]">
+            Back
+          </button>
+          &nbsp;
+          <button type="submit" [disabled]="form.invalid">Post</button>
+        </td>
+        <td></td>
+      </tr>
+    </table>
+  </form>
+</div>

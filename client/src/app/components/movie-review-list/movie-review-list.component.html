@@ -1,0 +1,37 @@
+<!-- <p>movie-review-list works!</p> -->
+
+<div>
+  <h3>Search Result</h3>
+  <button type="button" [routerLink]="['']">Back</button>
+
+  <div *ngIf="reviews.length < 0; else noReview">
+    <table *ngFor="let r of reviews">
+      <tr>
+        <td>
+          <img src="{{ r.image }}" width="300" />
+        </td>
+        <td>
+          <span>{{ r.title }} </span>
+          &nbsp;
+          <span>{{ r.rating }} </span>
+          <h2>{{ r.headline }}</h2>
+          <p>{{ r.summary }}</p>
+          Comments: {{ r.commentCount }}
+        </td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <button type="button" [routerLink]="['/comment, r.title']">
+            Comment
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <ng-template #noReview>
+    <h2>Your search produces no result</h2>
+  </ng-template>
+</div>
