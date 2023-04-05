@@ -111,7 +111,7 @@ public class Review {
 		review.setReviewURL(obj.get("link").asJsonObject().getString("url"));
 		review.setImage(haveImage("multimedia", obj));
 
-		System.out.println(">>>> IN toReview()");
+		// System.out.println(">>>> IN toReview()");
 		return review;
 	}
 
@@ -131,6 +131,7 @@ public class Review {
 				.add("rating", rating)
 				.add("headline", headline)
 				.add("summary", summary)
+				.add("reviewURL", reviewURL)
 				.add("image", image)
 				.add("commentCount", commentCount)
 				.build();
