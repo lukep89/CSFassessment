@@ -117,7 +117,7 @@ public class Review {
 	}
 
 	private static String haveImage(String fn, JsonObject obj) {
-		if (obj.getString(fn) != null) {
+		if (obj.getString(fn) != null && obj.containsKey("multimedia")) {
 			return obj.getString(fn);
 		}
 		return "noImage";

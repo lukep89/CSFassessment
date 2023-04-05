@@ -56,10 +56,12 @@ public class MovieService {
 
 		try {
 			resp = template.exchange(req, String.class);
+
 		} catch (RestClientException e) {
 			e.printStackTrace();
 			return Collections.emptyList();
 		}
+
 
 		String payload = resp.getBody();
 
