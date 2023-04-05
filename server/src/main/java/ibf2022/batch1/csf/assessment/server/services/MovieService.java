@@ -4,6 +4,7 @@ import java.io.StringReader;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -13,7 +14,9 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import ibf2022.batch1.csf.assessment.server.models.Comment;
 import ibf2022.batch1.csf.assessment.server.models.Review;
+import ibf2022.batch1.csf.assessment.server.repositories.MovieRepository;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
@@ -27,6 +30,9 @@ public class MovieService {
 
 	@Value("${movie.key}")
 	private String movieKey;
+
+	@Autowired
+	private MovieRepository movieRepo;
 
 	// TODO: Task 4
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
@@ -75,6 +81,14 @@ public class MovieService {
 				.map(n -> Review.toReview(n))
 				.toList();
 
+	}
+
+	public Comment saveComment(Comment comment) {
+		return movieRepo.saveComment(comment);
+	}
+
+	public int countComments() {
+		return movieRepo.countComments();
 	}
 
 }

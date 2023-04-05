@@ -52,25 +52,25 @@ public class Comment {
         this.comments = comments;
     }
 
-    // public static Comment create(Document doc) {
-    //     Comment comment = new Comment();
-    //     comment.setName(doc.getString("name"));
-    //     comment.setRating(doc.getString("rating"));
-    //     comment.setComment(doc.getString("comment"));
-    //     comment.setTitle(doc.getString("title"));
-
-    //     return comment;
-    // }
-
-    public Comment createToComment(JsonObject json) {
+    public static Comment create(Document doc) {
         Comment comment = new Comment();
-        comment.setName(json.getString("name"));
-        comment.setRating(json.getString("rating"));
-        comment.setComment(json.getString("comment"));
-        comment.setTitle(json.getString("title"));
+        comment.setName(doc.getString("name"));
+        comment.setRating(doc.getString("rating"));
+        comment.setComment(doc.getString("comment"));
+        comment.setTitle(doc.getString("title"));
 
         return comment;
     }
+
+    // public Comment createToComment(JsonObject json) {
+    //     Comment comment = new Comment();
+    //     comment.setName(json.getString("name"));
+    //     comment.setRating(json.getString("rating"));
+    //     comment.setComment(json.getString("comment"));
+    //     comment.setTitle(json.getString("title"));
+
+    //     return comment;
+    // }
 
     public JsonObject toJSON() {
         JsonObject jobj = Json.createObjectBuilder()

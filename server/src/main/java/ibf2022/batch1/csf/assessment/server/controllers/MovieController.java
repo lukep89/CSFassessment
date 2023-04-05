@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,8 +18,9 @@ import ibf2022.batch1.csf.assessment.server.models.Comment;
 import ibf2022.batch1.csf.assessment.server.models.Review;
 import ibf2022.batch1.csf.assessment.server.services.MovieService;
 import jakarta.json.Json;
-import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 
 @Controller
 // @CrossOrigin(origins = "*")
@@ -57,15 +57,24 @@ public class MovieController {
 
 	@PostMapping(path = "/api/comment")
 	public ResponseEntity<String> saveComment(@RequestBody Comment comment) {
-		Comment c = new Comment();
-
-		c.setName(comment.getName());
-		c.setRating(comment.getRating());
-		c.setComment(comment.getComment());
-		c.setTitle(comment.getTitle());
 
 		// save to mongo using repo
-		
+		movieSvc.saveComment(comment);
+
+		String title = comment.getTitle();
+
+		int movieCount = movieSvc.countComments();
+
+		JsonObjectBuilder ocjBuilder = Json.createObjectBuilder();
+		ocjBuilder.add("title", title);
+		ocjBuilder.add("movieCount", movieCount);
+		JsonObject result = ocjBuilder.build();
+
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(result.toString());
+
 	}
 
 }
