@@ -10,7 +10,7 @@ public class Comment {
     private String name;
     private String rating;
     private String comment;
-    private Comment[] comments;
+    // private Comment[] comments;
 
     public String getName() {
         return name;
@@ -44,13 +44,13 @@ public class Comment {
         this.title = title;
     }
 
-    public Comment[] getComments() {
-        return comments;
-    }
+    // public Comment[] getComments() {
+    //     return comments;
+    // }
 
-    public void setComments(Comment[] comments) {
-        this.comments = comments;
-    }
+    // public void setComments(Comment[] comments) {
+    //     this.comments = comments;
+    // }
 
     public static Comment create(Document doc) {
         Comment comment = new Comment();

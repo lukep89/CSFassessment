@@ -1,8 +1,6 @@
 package ibf2022.batch1.csf.assessment.server.repositories;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.GroupOperation;
-import org.springframework.data.mongodb.core.aggregation.UnwindOperation;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
 import ibf2022.batch1.csf.assessment.server.models.Comment;
@@ -31,33 +30,36 @@ public class MovieRepository {
 	//
 	/*
 	 * db.comments.aggregate([
+	 * { $match: { "title": ? } },
 	 * { $group: { _id: "$title", count: { $sum: 1 } } },
 	 * ])
 	 */
 
 	public int countComments(String title) {
 
+		int commentCount = 0;
+
+		Criteria criteria = Criteria.where("title").is(title);
+
+		MatchOperation matchAgg = Aggregation.match(criteria);
+
 		GroupOperation groupAgg = Aggregation.group("title")
 				.count().as("total");
 
-		Aggregation pipeline = Aggregation.newAggregation(groupAgg);
+		Aggregation pipeline = Aggregation.newAggregation(matchAgg, groupAgg);
 
 		List<Document> result = template.aggregate(pipeline, COLLECTION_COMMENTS, Document.class).getMappedResults();
 		// able to get list of result (title and it's count)
 		// System.out.println(">>>> list of Doc results: " + result);
 
-		Map<String, Integer> countMap = new HashMap<>();
 		for (Document d : result) {
 
 			Review r = Review.create(d);
 
-			countMap.put(r.getTitle(), r.getCommentCount());
+			commentCount = r.getCommentCount();
 		}
-		// System.out.println(">>>> hash map of countMap: " + countMap);
-		// System.out.println(">>>> hash map get count of countMap key: " +
-		// countMap.get("I'm an Electric Lampshade"));
 
-		return countMap.get(title);
+		return commentCount;
 	}
 
 	// TODO: Task 8

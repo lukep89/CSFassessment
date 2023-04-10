@@ -61,7 +61,6 @@ public class MovieService {
 			return Collections.emptyList();
 		}
 
-
 		String payload = resp.getBody();
 
 		JsonReader reader = Json.createReader(new StringReader(payload));
@@ -71,18 +70,18 @@ public class MovieService {
 		JsonArray jsonArr = respJsonObj.getJsonArray("results");
 		// System.out.println(">>>> jsonArr: " + jsonArr);
 
-
-		// List<Review> reviewsList = jsonArr.stream()
-		// .map(n -> n.asJsonObject())
-		// .map(n -> Review.toReview(n))
-		// .toList();
-
-		// return reviewsList;
-
-		return jsonArr.stream()
+		List<Review> reviewsList = jsonArr.stream()
 				.map(n -> n.asJsonObject())
 				.map(n -> Review.toReview(n))
 				.toList();
+
+		// for commentCount for each review
+		for (Review r : reviewsList) {
+			int commentCount = movieRepo.countComments(r.getTitle());
+			r.setCommentCount(commentCount);
+		}
+
+		return reviewsList;
 
 	}
 

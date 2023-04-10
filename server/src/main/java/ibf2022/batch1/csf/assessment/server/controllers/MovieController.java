@@ -47,7 +47,9 @@ public class MovieController {
 		JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
 		reviews.stream()
 				.forEach(v -> {
+
 					arrBuilder.add(v.toJsonObj());
+
 				});
 
 		return ResponseEntity.ok(arrBuilder.build().toString());
@@ -87,12 +89,12 @@ public class MovieController {
 			@RequestParam("name") String name, @RequestParam("rating") String rating,
 			@RequestParam("comment") String comment) {
 
-		// this method get back the request param
 		// System.out.println(">>>> controller title: " + title);
 		// System.out.println(">>>> controller name: " + name);
 		// System.out.println(">>>> controller rating: " + rating);
 		// System.out.println(">>>> controller comment: " + comment);
 
+		// this method get back the request param
 		Comment c = new Comment();
 		c.setTitle(title);
 		c.setName(name);
@@ -103,18 +105,9 @@ public class MovieController {
 
 		movieSvc.saveComment(c);
 
-		System.out.println(">>>> count comments: " + title + " = " + movieSvc.countComments(title));
-		int movieCount = movieSvc.countComments(title);
-
-		JsonObjectBuilder ocjBuilder = Json.createObjectBuilder();
-		ocjBuilder.add("title", title);
-		ocjBuilder.add("movieCount", movieCount);
-		JsonObject result = ocjBuilder.build();
-
 		return ResponseEntity
 				.status(HttpStatus.OK)
-				.contentType(MediaType.APPLICATION_JSON)
-				.body(result.toString());
+				.body(null);
 
 	}
 

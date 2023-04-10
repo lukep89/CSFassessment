@@ -6,5 +6,5 @@ export interface Review {
   summary: string;
   reviewURL: string;
   image: string;
-  commentCount: string;
+  commentCount: number;
 }
