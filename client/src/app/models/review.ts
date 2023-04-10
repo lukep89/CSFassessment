@@ -6,5 +6,5 @@ export interface Review {
   summary: string;
   reviewURL: string;
   image: string;
-  commentCount: string; // in server its int number
+  commentCount: string;
 }

@@ -90,8 +90,8 @@ public class MovieService {
 		return movieRepo.saveComment(comment);
 	}
 
-	public int countComments() {
-		return movieRepo.countComments();
+	public int countComments(String title) {
+		return movieRepo.countComments(title);
 	}
 
 }

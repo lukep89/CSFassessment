@@ -1,7 +1,10 @@
 package ibf2022.batch1.csf.assessment.server.repositories;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.data.mongodb.core.aggregation.UnwindOperation;
 import org.springframework.stereotype.Repository;
 
 import ibf2022.batch1.csf.assessment.server.models.Comment;
+import ibf2022.batch1.csf.assessment.server.models.Review;
 
 @Repository
 public class MovieRepository {
@@ -31,23 +35,29 @@ public class MovieRepository {
 	 * ])
 	 */
 
-	public int countComments() {
+	public int countComments(String title) {
 
 		GroupOperation groupAgg = Aggregation.group("title")
-				.count().as("totla");
+				.count().as("total");
 
 		Aggregation pipeline = Aggregation.newAggregation(groupAgg);
 
 		List<Document> result = template.aggregate(pipeline, COLLECTION_COMMENTS, Document.class).getMappedResults();
+		// able to get list of result (title and it's count)
+		// System.out.println(">>>> list of Doc results: " + result);
 
-		System.out.println("list of Doc results: " + result);
+		Map<String, Integer> countMap = new HashMap<>();
+		for (Document d : result) {
 
-		List<Comment> commentList = result.stream()
-				.map(d -> Comment.create(d))
-				// .filter(Comment d -> {d.getTitle().equals(title);})
-				.toList();
+			Review r = Review.create(d);
 
-		return commentList.size();
+			countMap.put(r.getTitle(), r.getCommentCount());
+		}
+		// System.out.println(">>>> hash map of countMap: " + countMap);
+		// System.out.println(">>>> hash map get count of countMap key: " +
+		// countMap.get("I'm an Electric Lampshade"));
+
+		return countMap.get(title);
 	}
 
 	// TODO: Task 8
@@ -65,9 +75,7 @@ public class MovieRepository {
 
 	public Comment saveComment(Comment comment) {
 
-		// Boolean isSaved = false;
-
-		return template.insert(comment, COLLECTION_COMMENTS); //can save to mongo
+		return template.insert(comment, COLLECTION_COMMENTS); // can save to mongo
 	}
 
 }

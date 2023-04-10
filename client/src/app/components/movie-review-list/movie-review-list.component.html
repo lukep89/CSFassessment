@@ -4,16 +4,16 @@
   <h3>Search Result</h3>
   <button type="button" [routerLink]="['']">Back</button>
 
-  <div *ngIf="reviews.length < 0; else noReview">
+  <div *ngIf="reviews; else noReview">
     <table *ngFor="let r of reviews">
       <tr>
         <td>
-          <img src="{{ r.image }}" width="300" />
+            <img *ngIf="r.image != 'noImage'; else noImage" src="{{ r.image }}" width="300" />
         </td>
         <td>
-          <span>{{ r.title }} </span>
-          &nbsp;
-          <span>{{ r.rating }} </span>
+          <a href="{{ r.reviewURL }}" target="_blank"
+            ><h3>{{ r.title }} ( {{ r.rating }} )</h3></a
+          >
           <h2>{{ r.headline }}</h2>
           <p>{{ r.summary }}</p>
           Comments: {{ r.commentCount }}
@@ -23,15 +23,27 @@
       <tr>
         <td></td>
         <td>
-          <button type="button" [routerLink]="['/comment, r.title']">
+          <button type="button" [routerLink]="['/comment/', r.title]">
             Comment
           </button>
         </td>
       </tr>
     </table>
-  </div>
 
+  </div>
   <ng-template #noReview>
     <h2>Your search produces no result</h2>
   </ng-template>
+
+   <ng-template #loading>
+    <h2>Loading...</h2>
+  </ng-template>
 </div>
+
+
+
+
+
+<ng-template #noImage>
+  <img src="/assets/placeholder.jpg" alt="" />
+</ng-template>

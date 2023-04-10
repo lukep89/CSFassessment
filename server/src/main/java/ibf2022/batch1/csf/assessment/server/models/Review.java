@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bson.Document;
+
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 
@@ -135,5 +137,14 @@ public class Review {
 				.add("image", image)
 				.add("commentCount", commentCount)
 				.build();
+	}
+
+	// for comment count
+	public static Review create(Document doc) {
+		Review review = new Review();
+		review.setTitle(doc.getString("_id"));
+		review.setCommentCount(doc.getInteger("total"));
+
+		return review;
 	}
 }

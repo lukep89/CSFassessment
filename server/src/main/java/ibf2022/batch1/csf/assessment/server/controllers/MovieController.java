@@ -58,10 +58,10 @@ public class MovieController {
 	// public ResponseEntity<String> saveComment(@RequestBody Comment comment) {
 
 	// // this method get back the request body
-	// System.out.println(">>>> controller comment: " + comment.getTitle()); 
-	// System.out.println(">>>> controller comment: " + comment.getName()); 
-	// System.out.println(">>>> controller comment: " + comment.getRating()); 
-	// System.out.println(">>>> controller comment: " + comment.getComment()); 
+	// System.out.println(">>>> controller comment: " + comment.getTitle());
+	// System.out.println(">>>> controller comment: " + comment.getName());
+	// System.out.println(">>>> controller comment: " + comment.getRating());
+	// System.out.println(">>>> controller comment: " + comment.getComment());
 
 	// // save to mongo using repo
 	// movieSvc.saveComment(comment);
@@ -88,10 +88,10 @@ public class MovieController {
 			@RequestParam("comment") String comment) {
 
 		// this method get back the request param
-		System.out.println(">>>> controller title: " + title);
-		System.out.println(">>>> controller name: " + name);
-		System.out.println(">>>> controller rating: " + rating);
-		System.out.println(">>>> controller comment: " + comment);
+		// System.out.println(">>>> controller title: " + title);
+		// System.out.println(">>>> controller name: " + name);
+		// System.out.println(">>>> controller rating: " + rating);
+		// System.out.println(">>>> controller comment: " + comment);
 
 		Comment c = new Comment();
 		c.setTitle(title);
@@ -99,13 +99,12 @@ public class MovieController {
 		c.setRating(rating);
 		c.setComment(comment);
 
-		System.out.println(">>>> new comment obj: " + c.toString());
+		// System.out.println(">>>> new comment obj: " + c.toString());
 
 		movieSvc.saveComment(c);
 
-		// String title = comment.getTitle();
-
-		int movieCount = movieSvc.countComments();
+		System.out.println(">>>> count comments: " + title + " = " + movieSvc.countComments(title));
+		int movieCount = movieSvc.countComments(title);
 
 		JsonObjectBuilder ocjBuilder = Json.createObjectBuilder();
 		ocjBuilder.add("title", title);
