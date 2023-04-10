@@ -40,9 +40,11 @@ public class MovieRepository {
 
 		List<Document> result = template.aggregate(pipeline, COLLECTION_COMMENTS, Document.class).getMappedResults();
 
+		System.out.println("list of Doc results: " + result);
+
 		List<Comment> commentList = result.stream()
 				.map(d -> Comment.create(d))
-				// .filter(Comment d -> {d.getTitle().equals(title);}) 
+				// .filter(Comment d -> {d.getTitle().equals(title);})
 				.toList();
 
 		return commentList.size();
@@ -63,9 +65,9 @@ public class MovieRepository {
 
 	public Comment saveComment(Comment comment) {
 
-		Boolean isSaved = false;
+		// Boolean isSaved = false;
 
-		return template.insert(comment, COLLECTION_COMMENTS);
+		return template.insert(comment, COLLECTION_COMMENTS); //can save to mongo
 	}
 
 }

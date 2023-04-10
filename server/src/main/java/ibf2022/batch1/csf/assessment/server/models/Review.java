@@ -103,7 +103,7 @@ public class Review {
 
 		Review review = new Review();
 		review.setTitle(obj.getString("display_title"));
-		System.out.println(">>>>>> object.get: " + obj.getString("display_title"));
+		// System.out.println(">>>>>> object.get: " + obj.getString("display_title"));
 		review.setRating(obj.getString("mpaa_rating"));
 		review.setByline(obj.getString("byline"));
 		review.setHeadline(obj.getString("headline"));

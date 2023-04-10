@@ -69,7 +69,7 @@ public class MovieService {
 		// System.out.println(">>>> respJsonObj: " + respJsonObj);
 
 		JsonArray jsonArr = respJsonObj.getJsonArray("results");
-		System.out.println(">>>> jsonArr: " + jsonArr);
+		// System.out.println(">>>> jsonArr: " + jsonArr);
 
 
 		// List<Review> reviewsList = jsonArr.stream()

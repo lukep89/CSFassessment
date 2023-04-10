@@ -6,10 +6,10 @@ import jakarta.json.Json;
 import jakarta.json.JsonObject;
 
 public class Comment {
+    private String title;
     private String name;
     private String rating;
     private String comment;
-    private String title;
     private Comment[] comments;
 
     public String getName() {

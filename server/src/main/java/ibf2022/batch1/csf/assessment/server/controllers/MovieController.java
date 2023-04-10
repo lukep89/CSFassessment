@@ -37,7 +37,6 @@ public class MovieController {
 	public ResponseEntity<String> searchReviews(@RequestParam String movieName) {
 
 		List<Review> reviews = movieSvc.searchReviews(movieName);
-
 		System.out.println(">>>> review list: " + reviews);
 
 		if (reviews.isEmpty()) {
@@ -55,13 +54,56 @@ public class MovieController {
 
 	}
 
+	// @PostMapping(path = "/api/comment")
+	// public ResponseEntity<String> saveComment(@RequestBody Comment comment) {
+
+	// // this method get back the request body
+	// System.out.println(">>>> controller comment: " + comment.getTitle()); 
+	// System.out.println(">>>> controller comment: " + comment.getName()); 
+	// System.out.println(">>>> controller comment: " + comment.getRating()); 
+	// System.out.println(">>>> controller comment: " + comment.getComment()); 
+
+	// // save to mongo using repo
+	// movieSvc.saveComment(comment);
+
+	// String title = comment.getTitle();
+
+	// int movieCount = movieSvc.countComments();
+
+	// JsonObjectBuilder ocjBuilder = Json.createObjectBuilder();
+	// ocjBuilder.add("title", title);
+	// ocjBuilder.add("movieCount", movieCount);
+	// JsonObject result = ocjBuilder.build();
+
+	// return ResponseEntity
+	// .status(HttpStatus.OK)
+	// .contentType(MediaType.APPLICATION_JSON)
+	// .body(result.toString());
+
+	// }
+
 	@PostMapping(path = "/api/comment")
-	public ResponseEntity<String> saveComment(@RequestBody Comment comment) {
+	public ResponseEntity<String> saveComment(@RequestParam("title") String title,
+			@RequestParam("name") String name, @RequestParam("rating") String rating,
+			@RequestParam("comment") String comment) {
 
-		// save to mongo using repo
-		movieSvc.saveComment(comment);
+		// this method get back the request param
+		System.out.println(">>>> controller title: " + title);
+		System.out.println(">>>> controller name: " + name);
+		System.out.println(">>>> controller rating: " + rating);
+		System.out.println(">>>> controller comment: " + comment);
 
-		String title = comment.getTitle();
+		Comment c = new Comment();
+		c.setTitle(title);
+		c.setName(name);
+		c.setRating(rating);
+		c.setComment(comment);
+
+		System.out.println(">>>> new comment obj: " + c.toString());
+
+		movieSvc.saveComment(c);
+
+		// String title = comment.getTitle();
 
 		int movieCount = movieSvc.countComments();
 
